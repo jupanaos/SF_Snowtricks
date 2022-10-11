@@ -1,0 +1,22 @@
+@use "../vars" as *;
+
+footer {
+    display: grid;
+    background-color: $text;
+    color: white;
+    padding: 2rem;
+    grid-template-columns: repeat(3, auto);
+    a {
+        color: $body;
+        padding-bottom: 0.5em;
+    }
+    ul {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+    }
+    .copyright {
+        font-size: 12px;
+        text-align: right;
+    }
+}

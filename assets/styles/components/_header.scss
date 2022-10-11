@@ -1,0 +1,36 @@
+@use "../vars" as *;
+
+.header {
+    color: $body;
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    background-color: $dark;
+    border: 1px solid $body;
+    .header_wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 2rem;
+        max-width: 1440px;
+        margin: 0 auto;
+        ul {
+            display: flex;
+            gap: 2rem;
+            border-left: 1px solid $body;
+            border-right: 1px solid $body;
+            padding: 1rem 2rem;
+            li {
+                a {
+                    color: $body;
+                    font-weight: bold;
+                    transition: 0.2s;
+                    white-space: nowrap;
+                    &:hover {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}

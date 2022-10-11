@@ -1,0 +1,96 @@
+@use "../vars" as *;
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.items-left {
+    align-items: flex-start;
+}
+
+.items-right {
+    align-items: flex-end;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-primary {
+    color: $primary;
+}
+
+.text-secondary {
+    color: $secondary;
+}
+
+.text-tertiary {
+    color: $tertiary;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    background-color: $primary;
+    padding: 0.3em 0.5em;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.button-primary {
+    background-color: $primary;
+    border-radius: 4px;
+    font-weight: 400;
+    color: white;
+    border: none;
+    &:hover {
+        background-color: $primary-light;
+    }
+}
+
+.button-secondary {
+    background-color: white;
+    border-radius: 4px;
+    font-weight: 400;
+    color: $primary;
+    border: 1px solid $primary;
+}
