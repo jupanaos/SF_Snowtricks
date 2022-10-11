@@ -1,3 +1,7 @@
 index:
     path: /
     controller: App\Controller\IndexController::showIndex
+
+trick:
+    path: /trick
+    controller: App\Controller\TrickController::showTrick
