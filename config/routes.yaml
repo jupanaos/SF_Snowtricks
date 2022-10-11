@@ -5,3 +5,7 @@ index:
 trick:
     path: /trick
     controller: App\Controller\TrickController::showTrick
+
+register:
+    path: /register
+    controller: App\Controller\UserController::showRegister
