@@ -1,0 +1,11 @@
+.home-tricks {
+    padding: 4rem 2rem;
+    &_wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+        max-width: 1140px;
+        margin: 0 auto;
+    }
+}

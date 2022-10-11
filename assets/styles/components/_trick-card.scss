@@ -1,0 +1,15 @@
+@use "../vars" as *;
+
+.trick-card {
+    max-width: 300px;
+    background-color: white;
+    padding: 1rem 2rem;
+    h3 {
+        font-size: 2.5rem;
+        border-bottom: 1px solid $text;
+        margin-bottom: 0.5em;
+        a {
+            color: $text;
+        }
+    }
+}
