@@ -51,9 +51,9 @@ class Trick
     private $video;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick")
      */
-    private $messages;
+    private $comments;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -67,7 +67,7 @@ class Trick
 
     public function __construct()
     {
-        $this->messages = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,29 +148,29 @@ class Trick
     }
 
     /**
-     * @return Collection<int, Message>
+     * @return Collection<int, Comment>
      */
-    public function getMessages(): Collection
+    public function getComments(): Collection
     {
-        return $this->messages;
+        return $this->comments;
     }
 
-    public function addMessage(Message $message): self
+    public function addMessage(Comment $comment): self
     {
-        if (!$this->messages->contains($message)) {
-            $this->messages[] = $message;
-            $message->setTrick($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeMessage(Message $message): self
+    public function removeComment(Comment $comment): self
     {
-        if ($this->messages->removeElement($message)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($message->getTrick() === $this) {
-                $message->setTrick(null);
+            if ($comment->getTrick() === $this) {
+                $comment->setTrick(null);
             }
         }
 

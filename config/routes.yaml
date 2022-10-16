@@ -1,6 +1,6 @@
-index:
+home:
     path: /
-    controller: App\Controller\IndexController::showIndex
+    controller: App\Controller\HomeController::showHome
 
 trick:
     path: /trick
