@@ -7,9 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
 {
-    #Route('/register', name: 'register')
+    #[Route('/register', name: 'register')]
     public function showRegister(): Response
     {
-        return $this->render('client/register.html.twig');
+        return $this->render('app/pages/login/register.html.twig');
     }
 }

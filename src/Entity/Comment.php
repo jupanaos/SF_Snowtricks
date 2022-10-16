@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\MessageRepository;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=MessageRepository::class)
+ * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
-class Message
+class Comment
 {
     /**
      * @ORM\Id
@@ -18,7 +18,7 @@ class Message
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
@@ -39,7 +39,7 @@ class Message
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="comments")
      */
     private $trick;
 
