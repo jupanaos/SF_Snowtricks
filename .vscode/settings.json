@@ -1,0 +1,5 @@
+{
+    "php.version": "v8.0.24",
+    "intelephense.references.exclude": [],
+    "intelephense.rename.exclude": []
+}
