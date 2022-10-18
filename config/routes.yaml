@@ -1,11 +1,11 @@
-home:
+app_home:
     path: /
     controller: App\Controller\HomeController::showHome
 
-trick:
-    path: /trick
+app_trick:
+    path: /figure
     controller: App\Controller\TrickController::showTrick
 
-register:
-    path: /register
-    controller: App\Controller\UserController::showRegister
+# app_register:
+#     path: /register
+#     controller: App\Controller\RegistrationController::register
