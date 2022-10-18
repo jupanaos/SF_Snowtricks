@@ -7,5 +7,5 @@ app_trick:
     controller: App\Controller\TrickController::showTrick
 
 # app_register:
-#     path: /register
+#     path: /inscription
 #     controller: App\Controller\RegistrationController::register
