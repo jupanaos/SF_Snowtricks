@@ -4,8 +4,12 @@
         <ul>
             <li><a href="/">Accueil</a></li>
             <li><a href="#">Figures</a></li>
-            <li><a href="/connexion">Se connecter</a></li>
-            <li><a href="/inscription">S'inscrire</a></li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+            {% else %}
+                <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
+            {% endif %}
         </ul>
     </div>
 </header>
