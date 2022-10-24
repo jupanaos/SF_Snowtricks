@@ -35,22 +35,6 @@ class Trick
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=TrickCategory::class, inversedBy="tricks")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $category;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $picture;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $video;
-
-    /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick")
      */
     private $comments;
@@ -65,9 +49,27 @@ class Trick
      */
     private $updated_at;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="trick", orphanRemoval=true)
+     */
+    private $pictures;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick")
+     */
+    private $videos;
+
+    /**
+     * @ORM\OneToMany(targetEntity=TrickCategory::class, mappedBy="trick")
+     */
+    private $trick_category;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+        $this->trick_category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,42 +109,6 @@ class Trick
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCategory(): ?TrickCategory
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?TrickCategory $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    public function getPicture(): ?string
-    {
-        return $this->picture;
-    }
-
-    public function setPicture(string $picture): self
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
-    public function getVideo(): ?string
-    {
-        return $this->video;
-    }
-
-    public function setVideo(string $video): self
-    {
-        $this->video = $video;
 
         return $this;
     }
@@ -197,6 +163,96 @@ class Trick
     public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getTrick() === $this) {
+                $picture->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Video>
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Video $video): self
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TrickCategory>
+     */
+    public function getTrickCategory(): Collection
+    {
+        return $this->trick_category;
+    }
+
+    public function addTrickCategory(TrickCategory $trickCategory): self
+    {
+        if (!$this->trick_category->contains($trickCategory)) {
+            $this->trick_category[] = $trickCategory;
+            $trickCategory->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrickCategory(TrickCategory $trickCategory): self
+    {
+        if ($this->trick_category->removeElement($trickCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($trickCategory->getTrick() === $this) {
+                $trickCategory->setTrick(null);
+            }
+        }
 
         return $this;
     }

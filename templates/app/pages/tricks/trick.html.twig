@@ -1,6 +1,6 @@
-{% extends "base.html.twig" %}
+{% extends "app/layout.html.twig" %}
 
-{% block body %}
+{% block content %}
 
 <section class="main-content">
     <div class="trick">
@@ -8,7 +8,7 @@
             <div class="main-img_wrapper">
                 <img src="{{ asset('img/surf.jpg') }}" alt="">
                 <div class="buttons_container">
-                    <!-- TODO: !!!! Si connecté !!!! -->
+                    {# TODO: Si connecté #}
                     <button>Edit</button>
                     <button>Delete</button>
                 </div>

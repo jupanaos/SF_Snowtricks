@@ -1,0 +1,36 @@
+{% extends "admin/layout.html.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Créer une figure</h1>
+    </div>
+
+    {# {{ form(form) }} #}
+    {{ form_start(addTrickForm) }}
+    <section class="main-content">
+        <form action="" class="flex flex-col gap-4">
+            {{ form_row(addTrickForm.title) }}
+            {{ form_errors(addTrickForm.title) }}
+            {{ form_row(addTrickForm.description) }}
+            {{ form_errors(addTrickForm.description) }}
+
+            {{ form_widget(addTrickForm.trick_category) }}
+
+            <div>
+                <ul data-prototype="{{ form_widget(addTrickForm.pictures.vars.prototype)|e }}"
+                            data-widget-tags="{{ '<li></li>'|e }}"
+                            data-widget-counter="{{ addTrickForm.pictures|length }}">
+                            {% for pictureField in addTrickForm.pictures %}
+                                <li>
+                                    {{ form_errors(pictureField) }}
+                                    {{ form_widget(pictureField) }}
+                                </li>
+                            {% endfor %}
+                </ul>
+                    <button>Ajouter une image</button>
+            </div>
+        </form>
+    </section>
+    {{ form_end(addTrickForm) }}
+{% endblock %}

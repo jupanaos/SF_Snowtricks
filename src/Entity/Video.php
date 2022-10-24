@@ -2,15 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickCategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\VideoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=TrickCategoryRepository::class)
+ * @ORM\Entity(repositoryClass=VideoRepository::class)
  */
-class TrickCategory
+class Video
 {
     /**
      * @ORM\Id
@@ -22,31 +20,26 @@ class TrickCategory
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $description;
+    private $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trick_category")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="videos")
      */
     private $trick;
-
-    public function __construct()
-    {
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDescription(): ?string
+    public function getUrl(): ?string
     {
-        return $this->description;
+        return $this->url;
     }
 
-    public function setDescription(string $description): self
+    public function setUrl(string $url): self
     {
-        $this->description = $description;
+        $this->url = $url;
 
         return $this;
     }
