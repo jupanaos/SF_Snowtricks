@@ -28,25 +28,27 @@ class TrickType extends AbstractType
                 'label' => 'Description',
             ])
             ->add('trick_category', EntityType::class, [
+                'label' => 'Categorie',
                 'class' => TrickCategory::class,
                 'choice_label' => 'description',
                 'multiple' => true,
                 'expanded' => true,
             ])
             ->add('pictures', CollectionType::class, [
+                'label' => false,
                 'entry_type' => PictureType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'by_reference' => false,
             ])
             ->add('videos', CollectionType::class, [
+                'label' => false,
                 'entry_type' => VideoType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
-            ->add('save', SubmitType::class)
         ;
     }
 

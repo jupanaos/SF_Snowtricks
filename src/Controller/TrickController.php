@@ -6,6 +6,7 @@ use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use App\Services\AlertServiceInterface;
 use App\Services\FileUploader;
 use App\Services\SlugifyService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,12 +17,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrickController extends AbstractController
 {
+    private AlertServiceInterface $alertService;
+
+    public function __construct(AlertServiceInterface $alertService)
+    {
+        $this->alertService = $alertService;
+    }
+
     #[Route('/figure', name: 'app_trick')]
     public function showTrick(): Response
     {
         return $this->render('app/pages/tricks/trick.html.twig');
     }
-    
+
+    /**
+     * 
+     */
     #[Route('/figure/ajouter', name: 'app_add-trick', methods: ['GET', 'POST'])]
     public function createTrick(Request $request, ManagerRegistry $doctrine, TrickRepository $trickRepository, SlugifyService $slugify, FileUploader $fileUploader): Response
     {
@@ -56,12 +67,13 @@ class TrickController extends AbstractController
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            $this->addFlash('success', 'La figure '.$trick->getTitle().' a bien été créée !');
+            $this->alertService->success(sprintf('La figure %s a bien été créée !', $trick->getTitle()));
+
             return $this->redirectToRoute('app_home');
         }
 
         return $this->render('admin/pages/tricks/new.html.twig', [
-            'addTrickForm' => $trickForm->createView()
+            'addTrickForm' => $trickForm->createView(),
         ]);
     }
 }

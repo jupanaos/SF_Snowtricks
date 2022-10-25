@@ -7,28 +7,24 @@
     </div>
 
     <section class="main-content">
-    {{ form_start(addTrickForm) }}
-        <div action="" class="flex flex-col gap-4">
+    {{ form_start(addTrickForm, {'attr': {'class': 'flex flex-col gap-4'}}) }}
             {{ form_row(addTrickForm.title) }}
             {{ form_errors(addTrickForm.title) }}
             {{ form_row(addTrickForm.description) }}
             {{ form_errors(addTrickForm.description) }}
 
-            {{ form_widget(addTrickForm.trick_category) }}
+            {{ form_row(addTrickForm.trick_category) }}
 
             <div>
                 <ul class="pictures"
                     data-index="{{ addTrickForm.pictures|length > 0 ? addTrickForm.pictures|last.vars.name + 1 : 0 }}"
                     data-prototype="{{ form_widget(addTrickForm.pictures.vars.prototype)|e('html_attr') }}"
-                    {# data-widget-tags="{{ '<li></li>'|e }}"
-                    data-widget-counter="{{ addTrickForm.pictures|length }}" #}
                     >
-                        {# {% for pictureField in addTrickForm.pictures %}
+                        {% for pictureField in addTrickForm.pictures %}
                             <li>
-                                {{ form_errors(pictureField) }}
-                                {{ form_widget(pictureField) }}
+                                {{ form_row(pictureField) }}
                             </li>
-                        {% endfor %} #}
+                        {% endfor %}
                 </ul>
                 <button class="add_item_link" type="button" data-collection-holder-class="pictures">Ajouter une image</button>
             </div>
@@ -36,19 +32,16 @@
                 <ul class="videos"
                     data-index="{{ addTrickForm.videos|length > 0 ? addTrickForm.videos|last.vars.name + 1 : 0 }}"
                     data-prototype="{{ form_widget(addTrickForm.videos.vars.prototype)|e('html_attr') }}"
-                    {# data-widget-tags="{{ '<li></li>'|e }}"
-                    data-widget-counter="{{ addTrickForm.videos|length }}" #}
                     >
-                        {# {% for videoField in addTrickForm.videos %}
+                        {% for videoField in addTrickForm.videos %}
                             <li>
-                                {{ form_errors(videoField) }}
-                                {{ form_widget(videoField) }}
+                                {{ form_row(videoField) }}
                             </li>
-                        {% endfor %} #}
+                        {% endfor %}
                 </ul>
                 <button class="add_item_link" type="button" data-collection-holder-class="videos">Ajouter une vidéo</button>
             </div>
-        </div>
+            <button type="submit">Publier</button>
         {{ form_end(addTrickForm) }}
     </section>
 

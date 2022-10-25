@@ -2,37 +2,36 @@
 
 namespace App\Services;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploader
 {
-    private $targetDirectory;
-    private $slugger;
+    private string $targetDirectory;
+    private LoggerInterface $logger;
 
-    public function __construct($targetDirectory, SluggerInterface $slugger)
+    public function __construct(string $targetDirectory, LoggerInterface $logger)
     {
         $this->targetDirectory = $targetDirectory;
-        $this->slugger = $slugger;
+        $this->logger = $logger;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file) :string
     {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+        $fileName = uniqid().'.'.$file->guessExtension();
 
         try {
             $file->move($this->getTargetDirectory(), $fileName);
         } catch (FileException $e) {
-            echo 'Erreur de chargement de fichier : ',  $e->getMessage(), "\n";
+            $this->logger->error(sprintf('Erreur de chargement de fichier : %s', $e->getMessage()));
+            throw new \Exception($e);
         }
 
         return $fileName;
     }
 
-    public function getTargetDirectory()
+    public function getTargetDirectory() :string
     {
         return $this->targetDirectory;
     }
