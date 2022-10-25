@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -14,11 +14,11 @@ class SlugifyService
     }
 
     /**
-     * Slugify a property's name (can then be used in URLs).
+     * Slugify a property name or title
      */
-    public function slugify(string $name)
+    public function slugify(string $title)
     {
-        $slug = $this->slugger->slug($name, '-', 'en_GB');
+        $slug = $this->slugger->slug($title, '-', 'en_GB');
 
         return $slug;
     }

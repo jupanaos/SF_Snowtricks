@@ -6,6 +6,7 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -20,6 +21,14 @@ class Trick
     private $id;
 
     /**
+     * @Assert\NotBlank(message = "Veuillez entrer un titre")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Le nom de la figure doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Le nom de la figure ne doit pas contenir plus de {{ limit }} caractères"
+     * )
+     * 
      * @ORM\Column(type="string", length=100)
      */
     private $title;
@@ -30,6 +39,13 @@ class Trick
     private $slug;
 
     /**
+     * @Assert\NotBlank(message = "Veuillez entrer une description")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 255,
+     *      minMessage = "La description de la figure doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Le description de la figure ne doit pas contenir plus de {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=255)
      */
     private $description;
@@ -40,22 +56,22 @@ class Trick
     private $comments;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="trick", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick", cascade={"persist", "remove"})
      */
     private $videos;
 
@@ -70,6 +86,7 @@ class Trick
         $this->pictures = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->trick_category = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

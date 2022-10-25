@@ -18,16 +18,16 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/utilisateur/figure/ajouter', name: 'app_add-trick', methods: ['GET', 'POST'])]
-    public function createTrick(): Response
-    {
-        $trick = new Trick();
-        $form = $this->createForm(TrickType::class, $trick);
+    // #[Route('/utilisateur/figure/ajouter', name: 'app_add-trick', methods: ['GET', 'POST'])]
+    // public function createTrick(): Response
+    // {
+    //     $trick = new Trick();
+    //     $form = $this->createForm(TrickType::class, $trick);
 
-        return $this->render('admin/pages/tricks/new.html.twig', [
-            'addTrickForm' => $form->createView()
-        ]);
-    }
+    //     return $this->render('admin/pages/tricks/new.html.twig', [
+    //         'addTrickForm' => $form->createView()
+    //     ]);
+    // }
 }
 // class UserController extends AbstractController
 // {

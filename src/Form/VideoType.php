@@ -2,28 +2,21 @@
 
 namespace App\Form;
 
-use App\Entity\Picture;
+use App\Entity\Video;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PictureType extends AbstractType
+class VideoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('path', FileType::class, [
-                'label' => 'Image (jpg/png)',
+            ->add('url', UrlType::class, [
+                'label' => 'Lien (Youtube, Dailymotion, ...)',
                 // make it optional so you don't have to re-upload the img file on each edit
                 'required' => false,
-            ])
-            ->add('caption', TextType::class, [
-                'label' => 'Légende',
-                'attr' => [
-                    'placeholder' => "Entrer une description"
-                ]
             ])
         ;
     }
@@ -31,7 +24,7 @@ class PictureType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Picture::class,
+            'data_class' => Video::class,
         ]);
     }
 }
