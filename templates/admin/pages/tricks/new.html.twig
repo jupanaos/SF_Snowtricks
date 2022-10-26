@@ -1,7 +1,6 @@
 {% extends "admin/layout.html.twig" %}
 
 {% block content %}
-
     <div class="container">
         <h1>Créer une figure</h1>
     </div>
@@ -44,31 +43,6 @@
             <button type="submit">Publier</button>
         {{ form_end(addTrickForm) }}
     </section>
-
-    <script>
-
-const addFormToCollection = (e) => {
-    const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
-
-    const item = document.createElement('li');
-
-    item.innerHTML = collectionHolder
-    .dataset
-    .prototype
-    .replace(
-        /__name__/g,
-        collectionHolder.dataset.index
-    );
-
-    collectionHolder.appendChild(item);
-
-    collectionHolder.dataset.index++;
-};
-
-document.querySelectorAll('.add_item_link').forEach(btn => {
-    btn.addEventListener("click", addFormToCollection)
-});
-</script>
 {% endblock %}
 
 
