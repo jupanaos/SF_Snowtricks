@@ -2,20 +2,52 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
+use App\Entity\Trick;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TrickController extends AbstractController
 {
-
-    public function __construct()
+    #[Route('/figure', name: 'app_trick_')]
+    public function __construct(private EntityManagerInterface $em)
     {
+        $this->em = $em;
     }
 
-    #[Route('/figures', name: 'app_trick')]
-    public function showTrick(): Response
+    #[Route('/liste', name: 'list')]
+    public function showTrickList(): Response
     {
+        return $this->render('app/pages/tricks/trick-list.html.twig');
+    }
+
+    #[Route('/{slug}', name: 'item')]
+    public function showTrick(Trick $trick, Request $request): Response
+    {
+         /* Create the comment form */
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentFormType::class, $comment);
+
+        $commentForm ->handleRequest($request);
+
+        /* If the comment form is validated */
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setAuthor($this->getUser());
+            $comment->setTrick($trick);
+
+            $this->em->persist($comment);
+            $this->em->flush();
+
+             /* Comment has been added, success message and redirection to the trick */
+            $this->addFlash('success', 'Votre commentaire a bien été ajouté !');
+            return $this->redirectToRoute('app_trick', [
+                'slug' => $trick->getSlug()
+            ]);
+        }
+
         return $this->render('app/pages/tricks/trick.html.twig');
     }
 

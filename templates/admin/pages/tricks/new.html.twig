@@ -1,12 +1,12 @@
 {% extends "admin/layout.html.twig" %}
 
 {% block content %}
-    <div class="container">
-        <h1>Créer une figure</h1>
-    </div>
 
     <section class="main-content">
-    {{ form_start(addTrickForm, {'attr': {'class': 'flex flex-col gap-4'}}) }}
+    
+        <h1>Créer une figure</h1>
+
+        {{ form_start(addTrickForm, {'attr': {'class': 'form-container'}}) }}
             {{ form_row(addTrickForm.title) }}
             {{ form_errors(addTrickForm.title) }}
             {{ form_row(addTrickForm.description) }}
@@ -14,7 +14,7 @@
 
             {{ form_row(addTrickForm.trick_category) }}
 
-            <div>
+            <div class="flex flex-col gap-4">
                 <ul class="pictures"
                     data-index="{{ addTrickForm.pictures|length > 0 ? addTrickForm.pictures|last.vars.name + 1 : 0 }}"
                     data-prototype="{{ form_widget(addTrickForm.pictures.vars.prototype)|e('html_attr') }}"
@@ -25,9 +25,9 @@
                             </li>
                         {% endfor %}
                 </ul>
-                <button class="add_item_link" type="button" data-collection-holder-class="pictures">Ajouter une image</button>
+                <button class="add_item_link button-secondary" type="button" data-collection-holder-class="pictures">Ajouter une image</button>
             </div>
-            <div>
+            <div class="flex flex-col gap-4">
                 <ul class="videos"
                     data-index="{{ addTrickForm.videos|length > 0 ? addTrickForm.videos|last.vars.name + 1 : 0 }}"
                     data-prototype="{{ form_widget(addTrickForm.videos.vars.prototype)|e('html_attr') }}"
@@ -38,9 +38,9 @@
                             </li>
                         {% endfor %}
                 </ul>
-                <button class="add_item_link" type="button" data-collection-holder-class="videos">Ajouter une vidéo</button>
+                <button class="add_item_link button-secondary" type="button" data-collection-holder-class="videos">Ajouter une vidéo</button>
             </div>
-            <button type="submit">Publier</button>
+            <button type="submit" class="button-primary self-end">Publier</button>
         {{ form_end(addTrickForm) }}
     </section>
 {% endblock %}

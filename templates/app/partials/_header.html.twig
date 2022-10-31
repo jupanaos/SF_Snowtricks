@@ -5,6 +5,8 @@
             <li><a href="/">Accueil</a></li>
             <li><a href="#">Figures</a></li>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li><a href="{{ path('account_tricks_add') }}">Ajouter une figure</a></li>
+                <li><a href="{{ path('account_category_add') }}">Ajouter une catégorie</a></li>
                 <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
             {% else %}
                 <li><a href="{{ path('app_login') }}">Se connecter</a></li>

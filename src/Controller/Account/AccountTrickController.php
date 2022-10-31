@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Account;
 
-use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
-use App\Services\AlertServiceInterface;
 use App\Services\FileUploader;
 use App\Services\SlugifyService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,36 +60,52 @@ class AccountTrickController extends AbstractController
         ]);
     }
 
-    #[Route('/editer', name: 'edit', methods: ['GET', 'POST'])]
-    public function editTrick(Request $request): Response
+    #[Route('/{slug}/editer', name: 'edit', methods: ['GET', 'POST'])]
+    public function editTrick(Trick $trick, Request $request): Response
     {
-        $trick = new Trick();
-        $trickForm = $this
+        $trick->$this->managePicture($trick->getPictures(), $trick);
+    
+        $editTrickForm = $this
             ->createForm(TrickType::class, $trick)
             ->handleRequest($request)
         ;
 
-        if ($trickForm->isSubmitted() && $trickForm->isValid()) {
-            $this->trickRepository->add($trick);
-            $trick = $trickForm->getData();
-            
+        if ($editTrickForm->isSubmitted() && $editTrickForm->isValid()) {
             /* Slugify from trick title */
-            $slug = $this->slugify->slugify($trick->getTitle());
-            $trick->setSlug($slug);
+            $trick->setSlug((string) $this->slugify->slugify($trick->getTitle()));
 
-            $trick = $this->managePicture($trickForm->get('pictures'), $trick);
+            $trick = $this->managePicture($editTrickForm->get('pictures'), $trick);
 
             $this->em->persist($trick);
             $this->em->flush();
 
-            $this->addFlash('success', sprintf('La figure %s a bien été modifiée !', $trick->getTitle()));
+            $this->addFlash(
+                'success',
+                sprintf('La figure %s a bien été modifiée !', $trick->getTitle())
+            );
 
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('admin/pages/tricks/new.html.twig', [
-            'addTrickForm' => $trickForm->createView(),
+        return $this->render('admin/pages/tricks/edit.html.twig', [
+            'addTrickForm' => $editTrickForm,
         ]);
+    }
+
+    #[Route('/{slug}', name: 'delete', methods: ['POST'])]
+    public function deleteTrick(Request $request, Trick $trick): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+            $this->em->remove($trick);
+            $this->em->flush();
+
+            $this->addFlash(
+                'success',
+                sprintf('La figure %s a bien été supprimée !', $trick->getTitle())
+            );
+        }
+
+        return $this->redirectToRoute('app_home');
     }
 
     private function managePicture($pictures, Trick $trick): Trick

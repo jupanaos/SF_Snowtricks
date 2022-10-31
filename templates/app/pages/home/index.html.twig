@@ -14,38 +14,9 @@
     </section>
     <section class="home-tricks">
         <ul class="home-tricks_wrapper">
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
+        {% for trick in tricks %}
+            {% include "app/partials/_trick-card.html.twig" with {'trick': trick} %}
+        {% endfor %}
         </ul>
     </section>
 </div>

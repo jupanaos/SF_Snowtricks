@@ -23,14 +23,16 @@ class TrickType extends AbstractType
         $builder
             ->add('title', TextType::class, [
                 'label' => 'Titre',
+                'row_attr' => ['class' => 'flex flex-col'],
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
+                'row_attr' => ['class' => 'flex flex-col'],
             ])
             ->add('trick_category', EntityType::class, [
                 'label' => 'Categorie',
                 'class' => TrickCategory::class,
-                'choice_label' => 'description',
+                'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
             ])
