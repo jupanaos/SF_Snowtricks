@@ -58,12 +58,12 @@ class Trick
     /**
      * @ORM\Column(type="datetime_immutable", options={"default": "CURRENT_TIMESTAMP"})
      */
-    private $created_at;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
-    private $updated_at;
+    private $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
@@ -78,15 +78,15 @@ class Trick
     /**
      * @ORM\OneToMany(targetEntity=TrickCategory::class, mappedBy="trick")
      */
-    private $trick_category;
+    private $trickCategory;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->videos = new ArrayCollection();
-        $this->trick_category = new ArrayCollection();
-        $this->created_at = new \DateTimeImmutable();
+        $this->trickCategory = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -162,24 +162,24 @@ class Trick
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updated_at;
+        return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
-        $this->updated_at = $updated_at;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -249,13 +249,13 @@ class Trick
      */
     public function getTrickCategory(): Collection
     {
-        return $this->trick_category;
+        return $this->trickCategory;
     }
 
     public function addTrickCategory(TrickCategory $trickCategory): self
     {
-        if (!$this->trick_category->contains($trickCategory)) {
-            $this->trick_category[] = $trickCategory;
+        if (!$this->trickCategory->contains($trickCategory)) {
+            $this->trickCategory[] = $trickCategory;
             $trickCategory->setTrick($this);
         }
 
@@ -264,7 +264,7 @@ class Trick
 
     public function removeTrickCategory(TrickCategory $trickCategory): self
     {
-        if ($this->trick_category->removeElement($trickCategory)) {
+        if ($this->trickCategory->removeElement($trickCategory)) {
             // set the owning side to null (unless already changed)
             if ($trickCategory->getTrick() === $this) {
                 $trickCategory->setTrick(null);

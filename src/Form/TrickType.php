@@ -30,7 +30,7 @@ class TrickType extends AbstractType
                 'row_attr' => ['class' => 'flex flex-col'],
             ])
             ->add('trick_category', EntityType::class, [
-                'label' => 'Categorie',
+                'label' => 'Catégorie',
                 'class' => TrickCategory::class,
                 'choice_label' => 'name',
                 'multiple' => true,

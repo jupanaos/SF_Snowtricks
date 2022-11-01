@@ -4,15 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/figure', name: 'app_tricks_')]
 class TrickController extends AbstractController
 {
-    #[Route('/figure', name: 'app_trick_')]
     public function __construct(private EntityManagerInterface $em)
     {
         $this->em = $em;
@@ -21,15 +22,15 @@ class TrickController extends AbstractController
     #[Route('/liste', name: 'list')]
     public function showTrickList(): Response
     {
-        return $this->render('app/pages/tricks/trick-list.html.twig');
+        return $this->render('app/pages/tricks/index.html.twig');
     }
 
     #[Route('/{slug}', name: 'item')]
     public function showTrick(Trick $trick, Request $request): Response
     {
-         /* Create the comment form */
+        /* Create the comment form */
         $comment = new Comment();
-        $commentForm = $this->createForm(CommentFormType::class, $comment);
+        $commentForm = $this->createForm(CommentType::class, $comment);
 
         $commentForm ->handleRequest($request);
 
@@ -43,12 +44,28 @@ class TrickController extends AbstractController
 
              /* Comment has been added, success message and redirection to the trick */
             $this->addFlash('success', 'Votre commentaire a bien été ajouté !');
-            return $this->redirectToRoute('app_trick', [
+            return $this->redirectToRoute('app_tricks_item', [
                 'slug' => $trick->getSlug()
             ]);
         }
 
-        return $this->render('app/pages/tricks/trick.html.twig');
+        $comments = $this->em
+            ->getRepository(Comment::class)
+            ->findBy(
+                [
+                    'trick' => $trick->getId(),
+                ],
+                [
+                    'created_at' => 'DESC',
+                ],
+                10
+            );
+
+        return $this->render('app/pages/tricks/trick.html.twig', [
+            'trick' => $trick,
+            'comments' => $comments,
+            'commentForm' => $commentForm->createView()
+        ]);
     }
 
     /**
