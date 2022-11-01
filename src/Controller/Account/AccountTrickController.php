@@ -56,25 +56,23 @@ class AccountTrickController extends AbstractController
         }
 
         return $this->render('admin/pages/tricks/new.html.twig', [
-            'addTrickForm' => $trickForm->createView(),
+            'trickForm' => $trickForm->createView(),
         ]);
     }
 
     #[Route('/{slug}/editer', name: 'edit', methods: ['GET', 'POST'])]
     public function editTrick(Trick $trick, Request $request): Response
-    {
-        $trick->$this->managePicture($trick->getPictures(), $trick);
-    
-        $editTrickForm = $this
+    {    
+        $trickForm = $this
             ->createForm(TrickType::class, $trick)
             ->handleRequest($request)
         ;
 
-        if ($editTrickForm->isSubmitted() && $editTrickForm->isValid()) {
+        if ($trickForm->isSubmitted() && $trickForm->isValid()) {
             /* Slugify from trick title */
             $trick->setSlug((string) $this->slugify->slugify($trick->getTitle()));
 
-            $trick = $this->managePicture($editTrickForm->get('pictures'), $trick);
+            $trick = $this->managePicture($trickForm->get('pictures'), $trick);
 
             $this->em->persist($trick);
             $this->em->flush();
@@ -88,7 +86,7 @@ class AccountTrickController extends AbstractController
         }
 
         return $this->render('admin/pages/tricks/edit.html.twig', [
-            'addTrickForm' => $editTrickForm,
+            'trickForm' => $trickForm->createView(),
         ]);
     }
 

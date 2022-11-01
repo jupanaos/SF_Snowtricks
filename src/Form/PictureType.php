@@ -16,6 +16,7 @@ class PictureType extends AbstractType
         $builder
             ->add('path', FileType::class, [
                 'label' => 'Image (jpg/png)',
+                'mapped' => false,
                 // make it optional so you don't have to re-upload the img file on each edit
                 'required' => false,
             ])
