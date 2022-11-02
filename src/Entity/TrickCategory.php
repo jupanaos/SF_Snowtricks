@@ -6,6 +6,7 @@ use App\Repository\TrickCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickCategoryRepository::class)
@@ -20,15 +21,23 @@ class TrickCategory
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message = "Veuillez entrer un nom de catégorie.")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 100,
+     *      minMessage = "Le nom de la catégorie doit contenir au moins {{ limit }} caractères",
+     *      maxMessage = "Le nom de la catégorie ne doit pas contenir plus de {{ limit }} caractères"
+     * )
+     * @ORM\Column(type="string", length=100)
      */
-    private $description;
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trick_category")
      * @ORM\JoinColumn(nullable=false)
      */
     private $trick;
+
 
     public function __construct()
     {
@@ -39,14 +48,14 @@ class TrickCategory
         return $this->id;
     }
 
-    public function getDescription(): ?string
+    public function getName(): ?string
     {
-        return $this->description;
+        return $this->name;
     }
 
-    public function setDescription(string $description): self
+    public function setName(string $name): self
     {
-        $this->description = $description;
+        $this->name = $name;
 
         return $this;
     }
@@ -62,4 +71,5 @@ class TrickCategory
 
         return $this;
     }
+
 }
