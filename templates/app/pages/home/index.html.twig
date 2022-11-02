@@ -9,13 +9,13 @@
         <div class="hero_wrapper">
             <img src="{{ asset('img/hero.jpg') }}" alt="snowboarder veste jaune">
             <div class="gradient"></div>
-            <h1>Apprends les meilleurs<br> <span class="text-primary">tricks</span> ou <span class="text-primary">contribue</span> !</h1>
+            <h1>La communauté du<br> <span class="text-primary">snowboard</span></h1>
         </div>
     </section>
     <section class="home-tricks">
         <ul class="home-tricks_wrapper">
         {% for trick in tricks %}
-            {% include "app/partials/_trick-card.html.twig" with {'trick': trick} %}
+            {% include "app/pages/tricks/_trick-card.html.twig" with {'trick': trick} %}
         {% endfor %}
         </ul>
     </section>

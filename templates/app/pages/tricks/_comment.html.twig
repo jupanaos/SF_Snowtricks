@@ -1,0 +1,8 @@
+<li class="comment-card">
+        {# <img src="{{ asset('uploads/' ~ comment.author.avatar|default('default.jpg')) }}" alt=""> #}
+        <p>{{ comment.author.username }}</p>
+        <p>Publié le</p> <p class="italic">{{ comment.createdAt|date('d/m/Y à H:i') }}</p>
+    <div class="flex justify-between">
+        <p>{{ comment.content }}</p>
+    </div>
+</li>

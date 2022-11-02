@@ -1,18 +1,20 @@
-{% extends "admin/layout.html.twig" %}
+{% extends "account/layout.html.twig" %}
 
 {% block content %}
+    <div class="container">
+        <h1>Modifier une figure</h1>
+    </div>
 
     <section class="main-content">
-    
-        <h1>Créer une figure</h1>
+    {{ form_start(trickForm, {'attr': {'class': 'form-container'}}) }}
+            {{ form_label(trickForm.title) }}
+            {{ form_widget(trickForm.title) }}
+            <small>{{ form_help(trickForm.title) }}</small>
 
-        {{ form_start(trickForm, {'attr': {'class': 'form-container'}}) }}
-            {{ form_row(trickForm.title) }}
-            {{ form_errors(trickForm.title) }}
             {{ form_row(trickForm.description) }}
             {{ form_errors(trickForm.description) }}
 
-            {{ form_row(trickForm.trick_category) }}
+            {{ form_row(trickForm.category) }}
 
             <div class="flex flex-col gap-4">
                 <ul class="pictures"
@@ -40,7 +42,7 @@
                 </ul>
                 <button class="add_item_link button-secondary" type="button" data-collection-holder-class="videos">Ajouter une vidéo</button>
             </div>
-            <button type="submit" class="button-primary self-end">Publier</button>
+            <button type="submit" class="button-primary self-end">Editer</button>
         {{ form_end(trickForm) }}
     </section>
 {% endblock %}

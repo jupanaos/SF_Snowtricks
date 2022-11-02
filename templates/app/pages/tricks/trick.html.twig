@@ -2,52 +2,113 @@
 
 {% block content %}
 
-<section class="main-content">
-    <div class="trick">
-        <div class="trick_wrapper">
-            <div class="main-img_wrapper">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <div class="buttons_container">
-                    {# TODO: Si connecté #}
-                    <button>Edit</button>
-                    <button>Delete</button>
+    <section class="main-content">
+        <div class="trick">
+            <div class="trick_wrapper">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    <a class="flex link" href="{{ path('account_tricks_edit', {'slug': trick.slug} ) }}"><button>Edit</button></a>
+                    <div>
+                        {% include "account/pages/tricks/_delete-form.html.twig" %}
+                    </div>
+                {% endif %}
+
+                {% include "app/pages/tricks/_trick-slideshow.html.twig" %}
+                {# <div class="main-img_wrapper">
+                    <img src="{{ asset('uploads/' ~ trick.pictures[0].path) }}" alt="">
+                    <div class="buttons_container">
+                    </div>
                 </div>
-            </div>
-            <div class="img_wrapper">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-            </div>
-            <article>
-                <div class="flex items-center gap-4">
-                <h1>Trick name</h1>
-                    <span class="label">Categorie</span>
+                <div class="img_wrapper">
+                {% for picture in trick.pictures %}
+                    <img src="{{ asset('uploads/' ~ trick.pictures) }}" alt="">
+                {% endfor %}
+                </div> #}
+
+                {# <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    {% for picture in trick.pictures %}
+                        <div class="carousel-item {% if loop.index == 1 %}{{ 'active' }}{% endif %}">
+                            <img class="d-block w-100" src="{{ asset('uploads/' ~ picture.path) }}" alt="First slide">
+                        </div>
+                    {% endfor %}
                 </div>
-                    <h2>Description</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio porro totam, ipsa pariatur molestiae facere ab labore sint quaerat esse nihil eum deleniti dignissimos. Eveniet vitae commodi eius. Sit quo asperiores earum modi repellendus quaerat sapiente? Distinctio excepturi esse eos, est beatae quisquam voluptate magnam laudantium dicta obcaecati alias ex blanditiis exercitationem dolore, perferendis iste accusamus qui adipisci nesciunt eaque labore odio repellat? Dolorum, rem mollitia libero quis aperiam quasi perferendis rerum vel ipsa accusamus ut harum commodi officiis nam quas qui hic dicta consectetur. Ad incidunt, dolorum saepe provident voluptatum similique consequuntur nam exercitationem dolor, perferendis veniam architecto distinctio?</p>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Précédent</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Suivant</span>
+                </a> #}
+                {# <div class="carousel-inner py-2">
+                    {% set pageNumber = (trick.pictures|length / 3)|round(0, 'ceil') %}
+                    {% for i in 1..pageNumber %}
+                        <div class="carousel-item {% if i == 1 %}{{ 'active' }}{% endif %}">
+                            <div class="d-flex justify-content-center">
+                                {% set pictureIndex = 0 %}
+                                {% for picture in trick.pictures|slice((i*3-3),(i*3)) %}
+
+                                    <figure class="col-3 px-2 trick carousel-element mx-2"  data-trick="{{ trick.slug }}" data-cover="{{ picture.id }}" data-alt="Pas de texte alternatif">
+                                        <div class="card h-100 bg-light d-flex flex-row flex-wrap card-body p-2 shadow-sm">
+                                            
+                                        </div>
+                                    </figure>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %} #}
+                </div>
+
+
                 
-            </article>
-            <div class="flex gap-4 text-center">
-                <div>
-                    <p>Article créé le :</p>
-                    <p class="italic">blip // blop // blap</p>
-                </div>
-                <div>
-                    <p>Article modifié le :</p>
-                    <p class="italic">blip // blop // blap</p>
+                <article>
+                    <div class="flex items-center gap-4">
+                    <h1>{{ trick.title }}</h1>
+                        {# <span class="label">{{ trick.trickCategory.name }}</span> #}
+                    </div>
+                        <h2>Description</h2>
+                    <p>{{ trick.description }}</p>
+                    
+                </article>
+                <div class="flex gap-4 text-center">
+                    <div>
+                        <p>Créé le :</p>
+                        <p class="italic">{{ trick.createdAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                    <div>
+                        <p>Modifié le :</p>
+                        <p class="italic">{{ trick.updatedAt|date('d/m/Y à H:i') }}</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <form action="" class="mx-auto">
-            <textarea name="" id="" cols="60" rows="10"></textarea>
-            <input type="button" value="submit" class="button-primary">
-        </form>
-        
-    </div>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <section class="comments-form">
+            {{ form_start(commentForm, {'attr': {'class': 'form-container'}}) }}
+                {{ form_row(commentForm.content) }}
+                <button type="submit" class="button-primary self-end">Commenter</button>
+            {{ form_end(commentForm) }}
+        </section>
+    {% else %}
+        <div class="alert alert-danger" role="alert">
+            <em class="fas fa-exclamation-circle me-2"></em>Vous devez vous connecter pour ajouter un commentaire.
+        </div>
+    {% endif %}
 
+    {% if comments is empty %}
+        <div class="small text-muted font-italic">Il n'y a pas encore de commentaire !</div>
+    {% else %}
+        {% for comment in comments %}
+            {% include "app/pages/tricks/_comment.html.twig" with {'comment': comment} %}
+        {% endfor %}
+    {% endif %}
 
-</section>
 
 {% endblock %}
