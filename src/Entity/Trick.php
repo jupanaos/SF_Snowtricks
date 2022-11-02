@@ -76,16 +76,16 @@ class Trick
     private $videos;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrickCategory::class, mappedBy="trick")
+     * @ORM\ManyToOne(targetEntity=TrickCategory::class, inversedBy="tricks")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $trickCategory;
+    private $category;
 
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->videos = new ArrayCollection();
-        $this->trickCategory = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -244,32 +244,14 @@ class Trick
         return $this;
     }
 
-    /**
-     * @return Collection<int, TrickCategory>
-     */
-    public function getTrickCategory(): Collection
+    public function getCategory(): ?TrickCategory
     {
-        return $this->trickCategory;
+        return $this->category;
     }
 
-    public function addTrickCategory(TrickCategory $trickCategory): self
+    public function setCategory(?TrickCategory $category): self
     {
-        if (!$this->trickCategory->contains($trickCategory)) {
-            $this->trickCategory[] = $trickCategory;
-            $trickCategory->setTrick($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTrickCategory(TrickCategory $trickCategory): self
-    {
-        if ($this->trickCategory->removeElement($trickCategory)) {
-            // set the owning side to null (unless already changed)
-            if ($trickCategory->getTrick() === $this) {
-                $trickCategory->setTrick(null);
-            }
-        }
+        $this->category = $category;
 
         return $this;
     }

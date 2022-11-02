@@ -33,14 +33,13 @@ class TrickCategory
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trick_category")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="category")
      */
-    private $trick;
-
+    private $tricks;
 
     public function __construct()
     {
+        $this->tricks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -60,16 +59,33 @@ class TrickCategory
         return $this;
     }
 
-    public function getTrick(): ?Trick
+    /**
+     * @return Collection<int, Trick>
+     */
+    public function getTricks(): Collection
     {
-        return $this->trick;
+        return $this->tricks;
     }
 
-    public function setTrick(?Trick $trick): self
+    public function addTrick(Trick $trick): self
     {
-        $this->trick = $trick;
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setCategory($this);
+        }
 
         return $this;
     }
 
+    public function removeTrick(Trick $trick): self
+    {
+        if ($this->tricks->removeElement($trick)) {
+            // set the owning side to null (unless already changed)
+            if ($trick->getCategory() === $this) {
+                $trick->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
 }

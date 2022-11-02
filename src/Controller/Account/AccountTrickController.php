@@ -55,7 +55,7 @@ class AccountTrickController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('admin/pages/tricks/new.html.twig', [
+        return $this->render('account/pages/tricks/new.html.twig', [
             'trickForm' => $trickForm->createView(),
         ]);
     }
@@ -85,7 +85,7 @@ class AccountTrickController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('admin/pages/tricks/edit.html.twig', [
+        return $this->render('account/pages/tricks/edit.html.twig', [
             'trickForm' => $trickForm->createView(),
         ]);
     }

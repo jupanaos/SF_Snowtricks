@@ -22,7 +22,7 @@ Encore
      */
     .addEntry('app-js', './assets/js/app/index.js')
     .addStyleEntry('app-styles', './assets/styles/global.scss')
-    .addEntry('admin-js', './assets/js/admin/index.js')
+    .addEntry('account-js', './assets/js/account/index.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/js/stimulus/controllers.json')
@@ -72,7 +72,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();
