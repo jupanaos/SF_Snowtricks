@@ -22,7 +22,13 @@ class TrickController extends AbstractController
     #[Route('/liste', name: 'list')]
     public function showTrickList(): Response
     {
-        return $this->render('app/pages/tricks/index.html.twig');
+        $tricks = $this->em
+        ->getRepository(Trick::class)
+        ->findAll();
+
+        return $this->render('app/pages/tricks/index.html.twig', [
+            'tricks' => $tricks,
+        ]);
     }
 
     #[Route('/{slug}', name: 'item')]

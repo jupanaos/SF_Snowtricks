@@ -18,8 +18,8 @@ function showSlides(n) {
     let slides = document.getElementsByClassName("slideshow-picture");
     let dots = document.getElementsByClassName("demo");
     let captionText = document.getElementById("caption");
-    if (n > slides.length) { slideIndex = 0 }
-    if (n < 0) { slideIndex = slides.length }
+    if (n > slides.length-1) { slideIndex = 0 }
+    if (n < 0) { slideIndex = slides.length-1 }
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
     }
@@ -28,5 +28,9 @@ function showSlides(n) {
     }
     slides[slideIndex].style.display = "block";
     dots[slideIndex].className += " active";
-    captionText.innerHTML = dots[slideIndex].alt;
+    if (dots[slideIndex].alt) {
+        captionText.innerHTML = dots[slideIndex].alt;
+    } else {
+        captionText.innerHTML = "";
+    }
 }

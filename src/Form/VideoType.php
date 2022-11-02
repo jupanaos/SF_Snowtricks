@@ -14,7 +14,7 @@ class VideoType extends AbstractType
     {
         $builder
             ->add('url', UrlType::class, [
-                'label' => 'Lien (Youtube, Dailymotion, ...)',
+                'label' => 'Lien embed (Youtube, Dailymotion, ...)',
                 // make it optional so you don't have to re-upload the img file on each edit
                 'required' => false,
             ])

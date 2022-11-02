@@ -1,9 +1,11 @@
 {% extends 'app/layout.html.twig' %}
 
 {% block content %}
+
 {% for flash_success in app.flashes('verify_email_success') %}
         <div class="sucess alert-success" role="alert">{{ flash_success }}</div>
-    {% endfor %}
+{% endfor %}
+
 <div class="main-content">
     <section class="hero">
         <div class="hero_wrapper">
@@ -20,4 +22,5 @@
         </ul>
     </section>
 </div>
+
 {% endblock content %}

@@ -3,7 +3,7 @@
         <span><span>Snow</span><span class="text-primary">Tricks!!!</span></span>
         <ul>
             <li><a href="/">Accueil</a></li>
-            <li><a href="#">Figures</a></li>
+            <li><a href="{{ path('app_tricks_list') }}">Figures</a></li>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li><a href="{{ path('account_tricks_add') }}">Ajouter une figure</a></li>
                 <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
