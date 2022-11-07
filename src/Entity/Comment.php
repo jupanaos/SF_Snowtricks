@@ -25,12 +25,6 @@ class Comment
     private $author;
 
     /**
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 255,
-     *      minMessage = "Votre commentaire doit contenir au moins {{ limit }} caractères",
-     *      maxMessage = "Votre commentaire ne doit pas contenir plus de {{ limit }} caractères."
-     * )
      * @ORM\Column(type="string", length=255)
      */
     private $content;

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class CommentType extends AbstractType
 {
@@ -16,6 +17,14 @@ class CommentType extends AbstractType
             ->add('content', TextareaType::class, [
                 'label' => 'Commentaire',
                 'row_attr' => ['class' => 'flex flex-col'],
+                'constraints' => [
+                    new Length([
+                        'min' => 2,
+                        'max' => 255,
+                        'minMessage' => 'Votre commentaire doit contenir au moins {{ limit }} caractères',
+                        'maxMessage' => 'Votre commentaire ne doit pas contenir plus de {{ limit }} caractères.'
+                    ]),
+                ],
             ])
         ;
     }

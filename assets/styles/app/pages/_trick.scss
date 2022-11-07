@@ -2,46 +2,10 @@
 
 .trick {
     .trick_wrapper {
-        .main-img_wrapper {
-            position: relative;
-            width: 100%;
-            margin-bottom: 2rem;
-            padding: 2rem;
-            .buttons_container {
-                display: flex;
-                gap: 1rem;
-                position: absolute;
-                z-index: 10;
-                right: 0;
-                top: 0;
-            }
-            img {
-                width: 100%;
-                height: auto;
-                object-fit: scale-down;
-                max-height: 400px;
-            }
-            &::after {
-                content: "";
-                position: absolute;
-                transform: translate(-50%);
-                left: 50%;
-                bottom: 0;
-                width: 20%;
-                height: 2px;
-                display: inline-block;
-                background-color: $primary;
-            }
-        }
-        .img_wrapper {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(4, minmax(auto, 100%));
-            gap: 5%;
-            img {
-                width: 100%;
-                height: auto;
-            }
+        .buttons-container {
+            display: flex;
+            gap: 1rem;
+            width: fit-content;
         }
         article {
             margin-bottom: 2rem;
@@ -54,7 +18,7 @@
                     position: absolute;
                     left: 0;
                     bottom: 0;
-                    width: 220px;
+                    width: 50px;
                     height: 2px;
                     display: inline-block;
                     background-color: $primary;
@@ -70,14 +34,14 @@
         }
     }
 
-    form {
-        display: flex;
-        flex-direction: column;
-        margin: 6rem auto;
-        width: fit-content;
-        input[type=button] {
-            margin: 1rem 0;
-            align-self: end;
-        }
-    }
+    // form {
+    //     display: flex;
+    //     flex-direction: column;
+    //     margin: 6rem auto;
+    //     width: fit-content;
+    //     input[type=button] {
+    //         margin: 1rem 0;
+    //         align-self: end;
+    //     }
+    // }
 }

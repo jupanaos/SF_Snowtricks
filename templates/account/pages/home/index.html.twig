@@ -1,22 +1,16 @@
 {% extends 'account/layout.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
 {% block content %}
 
-{# TODO DASHBOARD AUTHENTICATED USER ?#}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div>
+    <h1>Bienvenue {{ user.username }}!</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
+    D'ici vous pouvez :
     <ul>
-        <li>Your controller at <code><a href="{{ 'D:/Julie/CODE/2022/P6_Snowtricks-test/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/Julie/CODE/2022/P6_Snowtricks-test/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
+        <li>Ajouter une figure</li>
+        <li></li>
     </ul>
 </div>
 {% endblock %}

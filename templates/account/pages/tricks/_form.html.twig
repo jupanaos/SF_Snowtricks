@@ -1,0 +1,35 @@
+{{ form_start(trickForm, {'attr': {'class': 'form-container'}}) }}
+            {{ form_row(trickForm.title) }}
+            {{ form_errors(trickForm.title) }}
+            {{ form_row(trickForm.description) }}
+            {{ form_errors(trickForm.description) }}
+
+            {{ form_row(trickForm.category) }}
+
+            <div class="flex flex-col gap-4">
+                <ul class="pictures"
+                    data-index="{{ trickForm.pictures|length > 0 ? trickForm.pictures|last.vars.name + 1 : 0 }}"
+                    data-prototype="{{ form_widget(trickForm.pictures.vars.prototype)|e('html_attr') }}"
+                    >
+                        {% for pictureField in trickForm.pictures %}
+                            <li>
+                                {{ form_row(pictureField) }}
+                            </li>
+                        {% endfor %}
+                </ul>
+                <button class="add_item_link button-secondary" type="button" data-collection-holder-class="pictures">Ajouter une image</button>
+            </div>
+            <div class="flex flex-col gap-4">
+                <ul class="videos"
+                    data-index="{{ trickForm.videos|length > 0 ? trickForm.videos|last.vars.name + 1 : 0 }}"
+                    data-prototype="{{ form_widget(trickForm.videos.vars.prototype)|e('html_attr') }}"
+                    >
+                        {% for videoField in trickForm.videos %}
+                            <li>
+                                {{ form_row(videoField) }}
+                            </li>
+                        {% endfor %}
+                </ul>
+                <button class="add_item_link button-secondary" type="button" data-collection-holder-class="videos">Ajouter une vidéo</button>
+            </div>
+{{ form_end(trickForm) }}

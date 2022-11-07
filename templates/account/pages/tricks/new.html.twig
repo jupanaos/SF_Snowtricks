@@ -3,6 +3,9 @@
 {% block content %}
 
     <section class="main-content">
+        <div>
+            <a href="{{ path('app_home') }}" role="button" class="btn btn-dark"><i class="bi bi-arrow-left"></i></a>
+        </div>
     
         <h1>Créer une figure</h1>
 
@@ -40,7 +43,7 @@
                 </ul>
                 <button class="add_item_link button-secondary" type="button" data-collection-holder-class="videos">Ajouter une vidéo</button>
             </div>
-            <button type="submit" class="button-primary self-end">Publier</button>
+        <button type="submit" class="button-primary self-end">Publier</button>
         {{ form_end(trickForm) }}
     </section>
 {% endblock %}
