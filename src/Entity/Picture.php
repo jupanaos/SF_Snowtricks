@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\File;
 
 /**
  * @ORM\Entity(repositoryClass=PictureRepository::class)
@@ -19,25 +20,11 @@ class Picture
     private $id;
 
     /**
-     * @Assert\File(
-     *      maxSize: '2048k',
-     *      maxSizeMessage: 'Votre fichier est trop lourd ({{ size }} {{ suffix }}). Le poids maximum autorisé est de {{ limit }} {{ suffix }}.'
-     *      mimeTypes: ['image/jpeg', 'image/png'],
-     *      mimeTypesMessage: 'Votre image doit être au format jpeg ou png.',
-     * )
-     * @Assert\Image(
-     *      allowPortrait: false,
-     *      allowPortraitMessage: 'Votre image doit être au format paysage.')
-     * 
      * @ORM\Column(type="string", length=255)
      */
     private $path;
 
     /**
-     * @Assert\Length(
-     *      max = 150,
-     *      maxMessage = "Le légende de l'image ne doit pas contenir plus de {{ limit }} caractères."
-     * )
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $caption;

@@ -21,13 +21,8 @@ class TrickCategory
     private $id;
 
     /**
-     * @Assert\NotBlank(message = "Veuillez entrer un nom de catégorie.")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 100,
-     *      minMessage = "Le nom de la catégorie doit contenir au moins {{ limit }} caractères",
-     *      maxMessage = "Le nom de la catégorie ne doit pas contenir plus de {{ limit }} caractères"
-     * )
+     * @Assert\NotBlank(message = "Veuillez choisir un nom de catégorie.")
+     * 
      * @ORM\Column(type="string", length=100)
      */
     private $name;
