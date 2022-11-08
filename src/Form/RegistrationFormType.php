@@ -23,6 +23,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'label' => 'Pseudo',
+                'row_attr' => ['class' => 'flex flex-col'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un pseudo.',
@@ -31,6 +32,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
+                'row_attr' => ['class' => 'flex flex-col'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un email.',
@@ -53,10 +55,12 @@ class RegistrationFormType extends AbstractType
                         ]),
                     ],
                     'label' => 'Mot de passe',
+                    'row_attr' => ['class' => 'flex flex-col'],
                 ],
                 'second_options' => [
                     'attr' => ['autocomplete' => 'password'],
                     'label' => 'Confirmer le mot de passe',
+                    'row_attr' => ['class' => 'flex flex-col'],
                 ],
                 'invalid_message' => 'Les mots de passe entrés ne sont pas les mêmes.',
                 // Instead of being set onto the object directly,
@@ -65,6 +69,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('avatar', FileType::class, [
                 'label' => 'Avatar (jpg/png)',
+                'row_attr' => ['class' => 'flex flex-col'],
                 'mapped' => false,
                 // make it optional so you don't have to re-upload the img file on each edit
                 'required' => true,
