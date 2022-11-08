@@ -17,8 +17,8 @@
                                 {% include "account/pages/tricks/_delete-form.html.twig" %}
                             </div>
                         {% endif %}
-                        {# <span class="label">{{ trick.trickCategory.name }}</span> #}
                     </div>
+                    <span class="label">{{ trick.category.name }}</span>
                     <h2>Description</h2>
                     <p>{{ trick.description }}</p>
                     

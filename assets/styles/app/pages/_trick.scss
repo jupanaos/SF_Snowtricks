@@ -11,8 +11,10 @@
             margin-bottom: 2rem;
             h1 {
                 font-size: 42px;
+                font-weight: 700;
                 margin: 1em 0;
                 position: relative;
+                padding-bottom: 1rem;
                 &::after {
                     content: "";
                     position: absolute;
@@ -25,11 +27,15 @@
                 }
             }
             h2 {
-                font-size: 36px;
+                font-size: 2rem;
                 margin: 0.5em 0;
+            }
+            .label {
+                width: fit-content;
             }
             p {
                 font-size: 18px;
+                line-height: 2rem;
             }
         }
     }

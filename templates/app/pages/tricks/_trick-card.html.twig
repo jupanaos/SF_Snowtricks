@@ -1,6 +1,8 @@
 <li class="trick-card">
     <a href="{{ path('app_tricks_item', {'slug': trick.slug}) }}">
+    <div class="img-container">
         <img src="{{ asset('uploads/' ~ trick.pictures[0].path) }}" alt="">
+    </div>
         <h3>{{ trick.title }}</h3>
     </a>
     <div class="flex justify-between">
