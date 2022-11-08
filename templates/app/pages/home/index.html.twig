@@ -16,10 +16,11 @@
     </section>
 
     <section id="trick-section" class="home-tricks main-content">
-    <h3>Les figures de la communauté</h3>
+    <h2>Les figures de la communauté</h2>
     {% if tricks is empty %}
         <div class="small text-muted font-italic">Il n'y a pas encore de figure !</div>
     {% else %}
+    <div class="small text-muted font-italic">Il y a actuellement {{ tricks.getTotalItemCount }} figures.</div>
         <ul class="home-tricks_wrapper">
             {% for trick in tricks %}
                 {% include "app/pages/tricks/_trick-card.html.twig" with {'trick': trick} %}
@@ -33,7 +34,9 @@
         {% if next < tricks|length %}
             <a href="{{ path('app_home', { offset: next }) }}">Next</a>
         {% endif %} #}
-
+        <div class="d-flex justify-content-end">
+            <a href="#header_navbar"><button class="btn btn-warning rounded-circle"><i class="bi bi-chevron-up text-white"></i></button></a>
+        </div>
         <div class="pagination">
             {{ knp_pagination_render(tricks) }}
         </div>

@@ -1,8 +1,13 @@
 <footer>
     <span><span>Snow</span><span class="text-primary">Tricks!!!</span></span>
         <ul>
-            <li><a class="link" href="#">Accueil</a></li>
-            <li><a class="link" href="#">Figures</a></li>
+            <li><a class="link" href="{{ path('app_home') }}">Accueil</a></li>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li><a href="{{ path('app_logout') }}"><span>Déconnexion</span></a></li>
+            {% else %}
+                <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
+            {% endif %}
         </ul>
-    <p class="copyright">Copyright© 2022 Julie Pariona</p>
+    <p class="copyright">Copyright© {{ 'now' | date('Y') }} Julie Pariona</p>
 </footer>

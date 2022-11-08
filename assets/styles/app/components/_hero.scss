@@ -19,9 +19,10 @@
             bottom: 10%;
             left: 10%;
             font-weight: 700;
+            text-transform: uppercase;
             @media (max-width: 600px) {
                 transform: translate(-50%, -50%);
-                font-size: 32px;
+                font-size: 42px;
                 text-align: center;
                 top: 50%;
                 left: 50%;

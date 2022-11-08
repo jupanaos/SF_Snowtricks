@@ -12,8 +12,9 @@
     {% include 'app/partials/_header.html.twig' %}
 
     {% include "app/partials/_flash.html.twig" %}
-
-    {% block content %}{% endblock content %}
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
 
     {% include 'app/partials/_footer.html.twig' %}
 {% endblock body %}

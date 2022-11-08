@@ -3,9 +3,9 @@
     <div class="img-container">
         <img src="{{ asset('uploads/' ~ trick.pictures[0].path) }}" alt="">
     </div>
-        <h3>{{ trick.title }}</h3>
+    <h3 class="px-4">{{ trick.title }}</h3>
     </a>
-    <div class="flex justify-between">
+    <div class="flex justify-between px-4 pb-4">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a class="flex link" href="{{ path('account_tricks_edit', {'slug': trick.slug} ) }}"><button class="btn btn-warning card-link"><i class="bi bi-pencil-fill"></i></button></a>
             {% include "account/pages/tricks/_delete-form.html.twig" %}

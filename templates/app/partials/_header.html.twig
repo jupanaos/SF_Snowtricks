@@ -1,11 +1,11 @@
-<header class="header">
-    <a href="/"><img class="header_logo" src="{{ asset('img/logo.png') }}" alt="snowboarder veste jaune"></a>
+<header class="header" id="header_navbar">
+    <a href="{{ path('app_home') }}"><img class="header_logo" src="{{ asset('img/logo.png') }}" alt="snowboarder veste jaune"></a>
     <div class="header_wrapper">
         <ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li><a href="{{ path('account_tricks_add') }}"><i class="bi bi-plus-circle"></i> Ajouter une figure</a></li>
-                <li><a href="{{ path('account_user_dashboard', {'username': app.user.username}) }}"><i class="bi bi-person-circle"> {{app.user.username}}</i></a></li>
-                <li><a href="{{ path('app_logout') }}"><i class="bi bi-arrow-return-left"></i> Déconnexion</a></li>
+                <li><a href="{{ path('account_tricks_add') }}"><i class="bi bi-plus-circle"></i> <span>Ajouter une figure</span></a></li>
+                <li><a href="{{ path('account_user_dashboard', {'username': app.user.username}) }}"><i class="bi bi-person-circle"> <span>{{app.user.username}}</span></i></a></li>
+                <li><a href="{{ path('app_logout') }}"><i class="bi bi-arrow-return-left"></i> <span>Déconnexion</span></a></li>
             {% else %}
                 <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                 <li><a href="{{ path('app_register') }}">S'inscrire</a></li>

@@ -27,7 +27,13 @@
                     font-weight: bold;
                     transition: 0.2s;
                     white-space: nowrap;
-                    font-size: 0.9rem;
+                    @media (max-width: 520px) {
+                        font-size: 30px;
+                        span {
+                            display: none;
+                        }
+                    }
+
                     &:hover {
                         color: $warning;
                     }
