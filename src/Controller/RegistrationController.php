@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\EmailVerifier;
 use App\Security\UserAuthenticator;
+use App\Services\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,17 +23,25 @@ class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
 
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(EmailVerifier $emailVerifier, private FileUploader $fileUploader)
     {
         $this->emailVerifier = $emailVerifier;
+        $this->fileUploader = $fileUploader;
     }
 
     #[Route('/inscription', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UserAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        UserAuthenticatorInterface $userAuthenticator,
+        UserAuthenticator $authenticator,
+        EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $form = $this
+            ->createForm(RegistrationFormType::class, $user)
+            ->handleRequest($request)
+        ;
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -42,6 +51,9 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
+
+            $avatar = $this->fileUploader->upload($form->get('avatar')->getData());
+            $user->setAvatar($avatar);
 
             $entityManager->persist($user);
             $entityManager->flush();
@@ -54,6 +66,8 @@ class RegistrationController extends AbstractController
                     ->subject('Snowtricks - Veuillez confirmer votre email')
                     ->htmlTemplate('app/pages/registration/confirmation_email.html.twig')
             );
+
+            $this->addFlash('success', 'Un email de vérification vous a été envoyé.');
             // do anything else you need here, like send an email
 
             // return $userAuthenticator->authenticateUser(
@@ -82,9 +96,9 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_register');
         }
 
-        // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('verify_email_success', 'Votre email a bien été vérifié.');
+        $this->addFlash('success', 'Votre email a bien été vérifié.');
 
         return $this->redirectToRoute('app_home');
     }
+
 }

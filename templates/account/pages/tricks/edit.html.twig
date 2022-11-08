@@ -1,0 +1,53 @@
+{% extends "account/layout.html.twig" %}
+
+{% block content %}
+
+    <section class="main-content">
+        <div>
+            <a href="{{ path('app_home') }}" role="button" class="btn btn-dark"><i class="bi bi-arrow-left"></i></a>
+        </div>
+
+        <h1>Modifier une figure</h1>
+
+        {{ form_start(trickForm, {'attr': {'class': 'form-container'}}) }}
+                {{ form_label(trickForm.title) }}
+                {{ form_widget(trickForm.title) }}
+                <small>{{ form_help(trickForm.title) }}</small>
+
+                {{ form_row(trickForm.description) }}
+                {{ form_errors(trickForm.description) }}
+
+                {{ form_row(trickForm.category) }}
+
+                <div class="flex flex-col gap-4">
+                    <ul class="pictures"
+                        data-index="{{ trickForm.pictures|length > 0 ? trickForm.pictures|last.vars.name + 1 : 0 }}"
+                        data-prototype="{{ form_widget(trickForm.pictures.vars.prototype)|e('html_attr') }}"
+                        >
+                            {% for pictureField in trickForm.pictures %}
+                                <li>
+                                    {{ form_row(pictureField) }}
+                                </li>
+                            {% endfor %}
+                    </ul>
+                    <button class="add_item_link button-secondary" type="button" data-collection-holder-class="pictures">Ajouter une image</button>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <ul class="videos"
+                        data-index="{{ trickForm.videos|length > 0 ? trickForm.videos|last.vars.name + 1 : 0 }}"
+                        data-prototype="{{ form_widget(trickForm.videos.vars.prototype)|e('html_attr') }}"
+                        >
+                            {% for videoField in trickForm.videos %}
+                                <li>
+                                    {{ form_row(videoField) }}
+                                </li>
+                            {% endfor %}
+                    </ul>
+                    <button class="add_item_link button-secondary" type="button" data-collection-holder-class="videos">Ajouter une vidéo</button>
+                </div>
+                <button type="submit" class="button-primary self-end">Editer</button>
+            {{ form_end(trickForm) }}
+    </section>
+{% endblock %}
+
+

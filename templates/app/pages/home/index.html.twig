@@ -1,52 +1,46 @@
 {% extends 'app/layout.html.twig' %}
 
 {% block content %}
+
 {% for flash_success in app.flashes('verify_email_success') %}
         <div class="sucess alert-success" role="alert">{{ flash_success }}</div>
-    {% endfor %}
-<div class="main-content">
+{% endfor %}
+
+<div>
     <section class="hero">
         <div class="hero_wrapper">
-            <img src="{{ asset('img/hero.jpg') }}" alt="snowboarder veste jaune">
+            {# <img src="{{ asset('img/hero.jpg') }}" alt="snowboarder veste jaune"> #}
             <div class="gradient"></div>
-            <h1>Apprends les meilleurs<br> <span class="text-primary">tricks</span> ou <span class="text-primary">contribue</span> !</h1>
+            <h1>La communauté du<br> <span class="text-primary">snowboard</span></h1>
         </div>
     </section>
-    <section class="home-tricks">
+
+    <section id="trick-section" class="home-tricks main-content">
+    <h2>Les figures de la communauté</h2>
+    {% if tricks is empty %}
+        <div class="small text-muted font-italic">Il n'y a pas encore de figure !</div>
+    {% else %}
+    <div class="small text-muted font-italic">Il y a actuellement {{ tricks.getTotalItemCount }} figures.</div>
         <ul class="home-tricks_wrapper">
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
-            <li class="trick-card">
-                <img src="" alt="">
-                <h3><a href="#">Trick Name</a></h3>
-                <div class="flex">
-                    <button>edit</button>
-                    <button>delete</button>
-                </div>
-            </li>
+            {% for trick in tricks %}
+                {% include "app/pages/tricks/_trick-card.html.twig" with {'trick': trick} %}
+            {% endfor %}
         </ul>
+    {% endif %}
+
+        {# {% if previous >= 0 %}
+            <a href="{{ path('app_home', { offset: previous }) }}">Previous</a>
+        {% endif %}
+        {% if next < tricks|length %}
+            <a href="{{ path('app_home', { offset: next }) }}">Next</a>
+        {% endif %} #}
+        <div class="d-flex justify-content-end">
+            <a href="#header_navbar"><button class="btn btn-warning rounded-circle"><i class="bi bi-chevron-up text-white"></i></button></a>
+        </div>
+        <div class="pagination">
+            {{ knp_pagination_render(tricks) }}
+        </div>
     </section>
 </div>
+
 {% endblock content %}

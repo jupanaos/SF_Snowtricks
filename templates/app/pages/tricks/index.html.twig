@@ -1,0 +1,13 @@
+{% extends "app/layout.html.twig" %}
+
+{% block content %}
+
+    <section class="home-tricks">
+        <ul class="home-tricks_wrapper">
+        {% for trick in tricks %}
+            {% include "app/pages/tricks/_trick-card.html.twig" with {'trick': trick} %}
+        {% endfor %}
+        </ul>
+    </section>
+
+{% endblock %}

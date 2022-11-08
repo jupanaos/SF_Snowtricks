@@ -4,13 +4,15 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -24,7 +26,7 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un pseudo.',
-                    ])
+                    ]),
                 ]
             ])
             ->add('email', EmailType::class, [
@@ -32,33 +34,58 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un email.',
-                    ])
+                    ]),
                 ]
             ])
-            // ->add('agreeTerms', CheckboxType::class, [
-            //     'label' => 'J\'accepte les conditions générales du site',
-            //     'mapped' => false,
-            //     'constraints' => [
-            //         new IsTrue([
-            //             'message' => 'Vous devez accepter les conditions générales du site.',
-            //         ]),
-            //     ],
-            // ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => [
+                    'attr' => ['autocomplete' => 'password'],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Veuillez entrer un mot de passe',
+                        ]),
+                        new Length([
+                            'min' => 6,
+                            'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
+                            // max length allowed by Symfony for security reasons
+                            'max' => 4096,
+                        ]),
+                    ],
+                    'label' => 'Mot de passe',
+                ],
+                'second_options' => [
+                    'attr' => ['autocomplete' => 'password'],
+                    'label' => 'Confirmer le mot de passe',
+                ],
+                'invalid_message' => 'Les mots de passe entrés ne sont pas les mêmes.',
+                // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'label' =>'Mot de passe',
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+            ])
+            ->add('avatar', FileType::class, [
+                'label' => 'Avatar (jpg/png)',
+                'mapped' => false,
+                // make it optional so you don't have to re-upload the img file on each edit
+                'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe.',
+                        'message' => 'Veuillez ajouter une image',
                     ]),
-                    new Length([
-                        'min' => 6,
-                        'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères.',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                    new File([
+                        'maxSize' => '1024k',
+                        'maxSizeMessage' => 'Votre fichier est trop lourd ({{ size }} {{ suffix }}). Le poids maximum autorisé est de {{ limit }} {{ suffix }}.',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Votre image doit être au format jpeg ou png.',
+                    ]),
+                    new Image([
+                        'allowLandscape' => false,
+                        'allowPortrait' => false,
+                        'allowPortraitMessage' => 'Votre image doit être à un format carré.',
+                        'allowLandscapeMessage' => 'Votre image doit être à un format carré.',
                     ]),
                 ],
             ])

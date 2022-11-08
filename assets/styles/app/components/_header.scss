@@ -1,33 +1,41 @@
 @use "../vars" as *;
 
 .header {
-    color: $body;
-    position: sticky;
+    color: $dark;
     z-index: 10;
-    top: 0;
-    background-color: $dark;
-    border: 1px solid $body;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    .header_logo {
+        width: 140px;
+        height: auto;
+    }
     .header_wrapper {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-left: 2rem;
         max-width: 1440px;
         margin: 0 auto;
         ul {
             display: flex;
-            gap: 2rem;
-            border-left: 1px solid $body;
-            border-right: 1px solid $body;
+            column-gap: clamp(1rem, -0.429rem + 7.14vw, 6rem);
             padding: 1rem 2rem;
             li {
                 a {
-                    color: $body;
+                    color: $dark;
                     font-weight: bold;
                     transition: 0.2s;
                     white-space: nowrap;
+                    @media (max-width: 520px) {
+                        font-size: 30px;
+                        span {
+                            display: none;
+                        }
+                    }
+
                     &:hover {
-                        color: $primary;
+                        color: $warning;
                     }
                 }
             }

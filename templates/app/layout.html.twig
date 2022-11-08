@@ -11,7 +11,10 @@
 {% block body %}
     {% include 'app/partials/_header.html.twig' %}
 
-    {% block content %}{% endblock content %}
+    {% include "app/partials/_flash.html.twig" %}
+    <main>
+        {% block content %}{% endblock content %}
+    </main>
 
     {% include 'app/partials/_footer.html.twig' %}
 {% endblock body %}

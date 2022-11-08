@@ -1,53 +1,71 @@
-{% extends "base.html.twig" %}
+{% extends "app/layout.html.twig" %}
 
-{% block body %}
+{% block content %}
 
-<section class="main-content">
-    <div class="trick">
-        <div class="trick_wrapper">
-            <div class="main-img_wrapper">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <div class="buttons_container">
-                    <!-- TODO: !!!! Si connecté !!!! -->
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>
-            </div>
-            <div class="img_wrapper">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-                <img src="{{ asset('img/surf.jpg') }}" alt="">
-            </div>
-            <article>
-                <div class="flex items-center gap-4">
-                <h1>Trick name</h1>
-                    <span class="label">Categorie</span>
-                </div>
-                    <h2>Description</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio porro totam, ipsa pariatur molestiae facere ab labore sint quaerat esse nihil eum deleniti dignissimos. Eveniet vitae commodi eius. Sit quo asperiores earum modi repellendus quaerat sapiente? Distinctio excepturi esse eos, est beatae quisquam voluptate magnam laudantium dicta obcaecati alias ex blanditiis exercitationem dolore, perferendis iste accusamus qui adipisci nesciunt eaque labore odio repellat? Dolorum, rem mollitia libero quis aperiam quasi perferendis rerum vel ipsa accusamus ut harum commodi officiis nam quas qui hic dicta consectetur. Ad incidunt, dolorum saepe provident voluptatum similique consequuntur nam exercitationem dolor, perferendis veniam architecto distinctio?</p>
+    <section class="main-content">
+        <div class="trick">
+            <div class="trick_wrapper">
+
+                {% include "app/pages/tricks/_trick-slideshow.html.twig" %}
                 
-            </article>
-            <div class="flex gap-4 text-center">
-                <div>
-                    <p>Article créé le :</p>
-                    <p class="italic">blip // blop // blap</p>
-                </div>
-                <div>
-                    <p>Article modifié le :</p>
-                    <p class="italic">blip // blop // blap</p>
+                <article>
+                    <div class="flex items-center gap-4">
+                        <h1>{{ trick.title }}</h1>
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <div class="buttons-container">
+                                <a href="{{ path('account_tricks_edit', {'slug': trick.slug} ) }}"><button class="btn btn-warning card-link"><i class="bi bi-pencil-fill"></i></button></a>
+                                {% include "account/pages/tricks/_delete-form.html.twig" %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <span class="label">{{ trick.category.name }}</span>
+                    <h2>Description</h2>
+                    <p>{{ trick.description }}</p>
+                    
+                </article>
+                <div class="flex gap-4 text-center justify-center">
+                    <div>
+                        <p>Créé le :</p>
+                        <p class="italic">{{ trick.createdAt|date('d/m/Y à H:i') }}</p>
+                    </div>
+                    <div>
+                        <p>Modifié le :</p>
+                        <p class="italic">{{ trick.updatedAt|date('d/m/Y à H:i') }}</p>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <form action="" class="mx-auto">
-            <textarea name="" id="" cols="60" rows="10"></textarea>
-            <input type="button" value="submit" class="button-primary">
-        </form>
-        
-    </div>
+    <section class="main-content">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {{ form_start(commentForm, {'attr': {'class': 'form-container add-comment'}}) }}
+                    {{ form_row(commentForm.content) }}
+                    <button type="submit" class="button-primary self-end">Commenter</button>
+                {{ form_end(commentForm) }}
+            
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                <em class="fas fa-exclamation-circle me-2"></em>Vous devez vous connecter pour ajouter un commentaire.
+            </div>
+        {% endif %}
+    </section>
 
+    <section class="main-content">
+    <h3>Commentaires sur {{ trick.title }}</h3>
+        {% if comments is empty %}
+            <div class="small text-muted font-italic">Il n'y a pas encore de commentaire !</div>
+        {% else %}
+        <ul class="comments-list">
+            {% for comment in comments %}
+                {% include "app/pages/tricks/_comment.html.twig" with {'comment': comment} %}
+            {% endfor %}
+            <div class="pagination">
+                {{ knp_pagination_render(comments) }}
+            </div>
+        </ul>
+        {% endif %}
+    </section>
 
-</section>
 
 {% endblock %}

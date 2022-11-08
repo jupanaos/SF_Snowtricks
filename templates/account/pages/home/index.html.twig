@@ -1,0 +1,31 @@
+{% extends 'account/layout.html.twig' %}
+
+{% block title %}Tableau de bord{% endblock %}
+
+{% block content %}
+
+<div class="account main-content">
+    <h1>Bienvenue {{ user.username }} !</h1>
+    <div class="avatar">
+        <img class="avatar__image rounded-circle" src="{{ asset('uploads/' ~ app.user.avatar) }}" alt="avatar de {{ app.user.username }}">
+    </div>
+    
+    <p>D'ici vous pouvez :</p>
+    <ul>
+        <li>
+            <a href="{{ path('account_tricks_add') }}">
+                <button class="btn btn-outline-primary">
+                    <i class="bi bi-plus-circle"></i> <span>Ajouter une figure</span>
+                </button>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app_logout') }}">
+                <button class="btn btn-danger">
+                    <i class="bi bi-arrow-return-left"></i> <span>Se déconnecter</span>
+                </button>
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}
