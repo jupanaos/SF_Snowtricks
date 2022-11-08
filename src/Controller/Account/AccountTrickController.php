@@ -106,6 +106,13 @@ class AccountTrickController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
+    /**
+     * Gère l'upload d'images
+     *
+     * @param $pictures
+     * @param Trick $trick
+     * @return Trick
+     */
     private function managePicture($pictures, Trick $trick): Trick
     {
         foreach ($pictures as $picture) {

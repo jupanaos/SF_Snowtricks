@@ -52,6 +52,7 @@
     </section>
 
     <section class="main-content">
+    <h3>Commentaires sur {{ trick.title }}</h3>
         {% if comments is empty %}
             <div class="small text-muted font-italic">Il n'y a pas encore de commentaire !</div>
         {% else %}
@@ -59,6 +60,9 @@
             {% for comment in comments %}
                 {% include "app/pages/tricks/_comment.html.twig" with {'comment': comment} %}
             {% endfor %}
+            <div class="pagination">
+                {{ knp_pagination_render(comments) }}
+            </div>
         </ul>
         {% endif %}
     </section>

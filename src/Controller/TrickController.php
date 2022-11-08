@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +33,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{slug}', name: 'item')]
-    public function showTrick(Trick $trick, Request $request): Response
+    public function showTrick(Trick $trick, Request $request, PaginatorInterface $paginator): Response
     {
         /* Create the comment form */
         $comment = new Comment();
@@ -64,8 +65,12 @@ class TrickController extends AbstractController
                 [
                     'created_at' => 'DESC',
                 ],
-                10
             );
+
+        $comments = $paginator->paginate(
+            $comments,
+            $request->query->getInt(key:'page', default:1), limit: 3
+        );
 
         return $this->render('app/pages/tricks/trick.html.twig', [
             'trick' => $trick,
