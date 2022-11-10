@@ -1,5 +1,7 @@
 {% extends "app/layout.html.twig" %}
 
+{% block title %}{{ trick.title }} - Snowtricks {% endblock %}
+
 {% block content %}
 
     <section class="main-content">
@@ -49,9 +51,7 @@
                 <em class="fas fa-exclamation-circle me-2"></em>Vous devez vous connecter pour ajouter un commentaire.
             </div>
         {% endif %}
-    {# </section>
 
-    <section class="comments-section"> #}
     <h3><i class="bi bi-chat"></i> Commentaires</h3>
         {% if comments is empty %}
             <div class="small text-muted font-italic">Il n'y a pas encore de commentaire !</div>
@@ -66,6 +66,5 @@
         </ul>
         {% endif %}
     </section>
-
 
 {% endblock %}

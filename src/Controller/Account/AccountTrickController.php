@@ -87,6 +87,7 @@ class AccountTrickController extends AbstractController
 
         return $this->render('account/pages/tricks/edit.html.twig', [
             'trickForm' => $trickForm->createView(),
+            'trick' => $trick,
         ]);
     }
 
