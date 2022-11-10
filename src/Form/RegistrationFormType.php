@@ -86,12 +86,6 @@ class RegistrationFormType extends AbstractType
                         ],
                         'mimeTypesMessage' => 'Votre image doit être au format jpeg ou png.',
                     ]),
-                    new Image([
-                        'allowLandscape' => false,
-                        'allowPortrait' => false,
-                        'allowPortraitMessage' => 'Votre image doit être à un format carré.',
-                        'allowLandscapeMessage' => 'Votre image doit être à un format carré.',
-                    ]),
                 ],
             ])
         ;

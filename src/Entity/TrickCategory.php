@@ -21,8 +21,6 @@ class TrickCategory
     private $id;
 
     /**
-     * @Assert\NotBlank(message = "Veuillez choisir un nom de catégorie.")
-     * 
      * @ORM\Column(type="string", length=100)
      */
     private $name;

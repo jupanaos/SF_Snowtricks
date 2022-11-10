@@ -45,6 +45,14 @@ class Trick
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Assert\NotBlank(message: 'Veuillez entrer une description.')]
+    #[Assert\Length(
+        min:2,
+        max:255,
+        minMessage:'La description de la figure doit contenir au moins {{ limit }} caractères.',
+        maxMessage:'La description de la figure ne doit pas contenir plus de {{ limit }} caractères.'
+        )
+    ]
     private $description;
 
     /**
@@ -76,6 +84,7 @@ class Trick
      * @ORM\ManyToOne(targetEntity=TrickCategory::class, inversedBy="tricks")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Assert\NotBlank(message: 'Veuillez choisir une catégorie.')]
     private $category;
 
     public function __construct()

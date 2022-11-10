@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-#[UniqueEntity(fields: ['email'], message: 'Un compte existant utilise déjà cet email')]
+#[UniqueEntity(fields: ['email', 'username'], message: 'Un compte existant utilise déjà {{ value }} comme {{ label }}')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
