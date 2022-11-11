@@ -1,0 +1,43 @@
+{% extends 'app/layout.html.twig' %}
+
+{% block content %}
+
+{% for flash_success in app.flashes('verify_email_success') %}
+        <div class="sucess alert-success" role="alert">{{ flash_success }}</div>
+{% endfor %}
+
+<div>
+    <section class="hero">
+        <div class="hero_wrapper">
+            {# <img src="{{ asset('img/hero.jpg') }}" alt="snowboarder veste jaune"> #}
+            <div class="gradient"></div>
+            <h1>La communauté du<br> <span class="text-primary">snowboard</span></h1>
+        </div>
+    </section>
+
+    <section id="trick-section" class="home-tricks main-content">
+    <h2 class="text-center">Les figures de la communauté</h2>
+
+    {% if tricks is empty %}
+        <p class="small text-muted font-italic text-center">Il n'y a pas encore de figure !</p>
+    {% else %}
+        <p class="small text-muted font-italic text-center">
+            Il y a actuellement {{ tricks.getTotalItemCount }} figures.
+        </p>
+        <ul class="home-tricks_wrapper">
+            {% for trick in tricks %}
+                {% include "app/pages/tricks/_trick-card.html.twig" with {'trick': trick} %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+        <div class="d-flex justify-content-end">
+            <a href="#header_navbar"><button class="btn btn-warning rounded-circle"><i class="bi bi-chevron-up text-white"></i></button></a>
+        </div>
+        <div class="pagination">
+            {{ knp_pagination_render(tricks) }}
+        </div>
+    </section>
+</div>
+
+{% endblock content %}
