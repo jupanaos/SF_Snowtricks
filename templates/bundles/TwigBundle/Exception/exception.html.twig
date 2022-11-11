@@ -1,0 +1,13 @@
+{% extends "app/layout.html.twig" %}
+
+{% block title %}
+    Il y a un problème !
+{% endblock %}
+
+{% block body %}
+    <div class="main-content">
+            <p>
+                Il y a un problème: {{ exception.message|trans }}
+            </p>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "account/layout.html.twig" %}
+
+{% block title %}Modifier {{ trick.title }} - Snowtricks{% endblock %}
+{% block content %}
+
+    <section class="main-content">
+        <div>
+            <a href="{{ path('app_home') }}" role="button" class="btn btn-dark"><i class="bi bi-arrow-left"></i></a>
+        </div>
+
+        <h1>Modifier une figure</h1>
+
+        {% include 'account/pages/tricks/_form.html.twig' %} 
+    </section>
+
+{% endblock %}
+
+

@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+app_home:
+    path: /
+    controller: App\Controller\HomeController::showHome
+
+app_trick:
+    path: /figure
+    controller: App\Controller\TrickController::showTrick
+
+# app_register:
+#     path: /inscription
+#     controller: App\Controller\RegistrationController::register
