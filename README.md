@@ -34,6 +34,7 @@ Create your database. This will use the DATABASE_URL from your `.env.local`.<br>
 ```bash
 php bin/console doctrine:database:create
 ```
+Import the database file `snowtricks.sql` into your new database.
 
 #### Build web assets
 ```bash
